@@ -1,0 +1,117 @@
+@page "/calculadora"
+@rendermode InteractiveServer
+
+<PageTitle>Calculadora</PageTitle>
+
+@code {
+    private string Primervalores;
+    private string Segundovalores;
+    private string operadores;
+    private string Pantalla = "";
+
+    private double num1;
+    private double num2;
+    private string operadorSeleccionado;
+    private double resultado;
+
+
+    private void BtnNumero(double a)
+    {
+        Pantalla += a.ToString();
+    }
+
+
+    private void BtnOperador(char operador)
+    {
+        if (!string.IsNullOrEmpty(Pantalla))
+        {
+            num1 = double.Parse(Pantalla);
+            if (operador == '+')
+            {
+                operadorSeleccionado = operador.ToString();
+            }
+            else if (operador == '-')
+            {
+                operadorSeleccionado = operador.ToString();
+            }
+            else if (operador == '*')
+            {
+                operadorSeleccionado = operador.ToString();
+            }
+            else if (operador == '/')
+            {
+                operadorSeleccionado = operador.ToString();
+            }
+            Pantalla = "";
+        }
+    }
+
+
+    private void CalculoTotal()
+    {
+        if (!string.IsNullOrEmpty(Pantalla))
+        {
+            num2 = double.Parse(Pantalla);
+            switch (operadorSeleccionado)
+            {
+                case "+":
+                    resultado = num1 + num2;
+                    break;
+                case "-":
+                    resultado = num1 - num2;
+                    break;
+                case "*":
+                    resultado = num1 * num2;
+                    break;
+                case "/":
+                    if (num2 != 0)
+                    {
+                        resultado = num1 / num2;
+                    }
+                    else
+                    {
+                        Pantalla = "Error: División por cero";
+                        return;
+                    }
+                    break;
+                default:
+                    Pantalla = "Operador no válido";
+                    return;
+            }
+            Pantalla = resultado.ToString(); // Mostrar el resultado
+        }
+    }
+}
+
+<div class="container">
+    <div class="row gap-2">
+        <div class="col">
+            <input class="form-control" type="text" value="@Pantalla" aria-label="readonly input example" readonly>
+        </div>
+        <div class="col">
+            <div>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnNumero(7)">7</button>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnNumero(8)">8</button>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnNumero(9)">9</button>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnOperador('/')">/</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnNumero(4)">4</button>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnNumero(5)">5</button>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnNumero(6)">6</button>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnOperador('*')">*</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnNumero(1)">1</button>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnNumero(2)">2</button>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnNumero(3)">3</button>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnOperador('-')">-</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnNumero(0)">0</button>
+                <button type="button" class="btn btn-outline-dark" @onclick="CalculoTotal">=</button>
+                <button type="button" class="btn btn-outline-dark" @onclick="()=> BtnOperador('+')">+</button>
+            </div>
+        </div>
+    </div>
+</div>

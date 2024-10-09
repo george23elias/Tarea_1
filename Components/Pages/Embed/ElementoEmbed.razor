@@ -1,0 +1,15 @@
+@rendermode InteractiveServer
+
+@code {
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public string Texto { get; set; } = string.Empty;
+    [Parameter] public string Url { get; set; } = string.Empty;
+    private string Modificador => $"https://www.youtube.com/embed/{Url}";
+}
+
+<div class="container">
+    <h2>@Title</h2>
+    <iframe width="560" height="315" src="@Modificador" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+    </iframe>
+    <p>@Texto</p>
+</div>
