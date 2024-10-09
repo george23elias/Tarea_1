@@ -1,0 +1,57 @@
+@page "/tabla"
+@rendermode InteractiveServer
+
+<PageTitle>Tabla Multiplicacion</PageTitle>
+
+<div>
+    <input type="number" @bind="Valor" />
+    <input type="submit" @onclick="Result" value="Generar" />
+
+    <table class="table">
+        <caption>Tabla de Multiplicación</caption>
+        <thead class="table-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Multiplicador</th>
+                <th scope="col">Multiplicando</th>
+                <th scope="col">Producto</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Tabla.Count > 0)
+            {
+                @for (int i = 0; i < Tabla.Count; i++)
+                {
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td>@Valor</td> 
+                        <td>@i</td> 
+                        <td>@Tabla[i]</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No hay datos para mostrar. Ingresa un número y genera la tabla.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private Tabla multiplicador = new Tabla();
+    private int Valor { get; set; }
+    private List<int> Tabla = new List<int>();
+
+    private void Result()
+    {
+        // Limpiar la lista antes de generar nuevos resultados
+        Tabla.Clear();
+        // Generar la tabla de multiplicación
+        multiplicador.GeneradorMultiplicacion(Valor);
+        // Obtener los nuevos resultados
+        Tabla = multiplicador.Result();
+    }
+}
